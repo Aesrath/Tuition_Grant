@@ -1,0 +1,26 @@
+﻿@{
+    Layout = "_ExLayout";
+}
+
+<!--
+    TODO P07 Razor Ex03: Complete for each version of the snack stock looping.
+    Refer to LoopForSnackStock.cshtml
+
+	@{ 
+		var myRation = new List<Snack>
+		{
+			new Snack("Eclair", 2.5, 12),
+			new Snack("Muffin", 5.43, 41)
+
+		};
+
+	}
+    -->
+
+@foreach (var p in myRation)
+{
+	<div>Name: @p.Name</div>
+	<div>Price: @p.Price</div>
+	<div>Stock: @p.Stock</div>
+
+}

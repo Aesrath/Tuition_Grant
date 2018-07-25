@@ -1,0 +1,36 @@
+﻿@model List<SRBooking>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_SingRoomLayout.cshtml";
+
+    List<dynamic> lstPackages = ViewData["PackageTypes"] as List<dynamic>;
+}
+
+<span style="color:red">@TempData["Msg"]</span>
+@foreach (var p in lstPackages)
+{
+    <h2>@p.Description</h2>
+    var data = Model.Where(b => b.PackageTypeId == p.Id)
+                                .OrderBy(b => b.BookingDate)
+                                .ThenBy(b => b.SlotId)
+                                .ToList<SRBooking>();
+    <table class="table table-bordered table-condensed table-hover table-striped">
+        <tr>
+            <th class="col-sm-2">Booking Date</th>
+            <th class="col-sm-1">Booking ID</th>
+            <th class="col-sm-2">Name</th>
+        </tr>
+        @foreach (SRBooking b in data)
+        {
+            <tr>
+                <td>@string.Format("{0:dd-MM-yyyy}", b.BookingDate)</td>
+                <td>@b.Id</td>
+                <td>@b.Name</td>
+            </tr>
+        }
+    </table>
+
+}
+
+

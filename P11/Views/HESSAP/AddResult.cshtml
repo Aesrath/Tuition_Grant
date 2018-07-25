@@ -1,0 +1,59 @@
+﻿@model Result
+@{
+
+    ViewBag.Title = "Add Student Result";
+
+    var students = ViewData["students"] as List<dynamic>;
+    students.Insert(0, new { value = "0", text = "-- SELECT --" });
+
+    var modules = ViewData["modules"] as List<dynamic>;
+    modules.Insert(0, new { value = "0", text = "-- SELECT --" });
+
+    string msg = ViewData["msg"] as string;
+}
+
+
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="col-sm-8">
+        <form asp-controller="HESSAP" asp-action="AddResult" method="post" class="form-horizontal" role="form">
+            @if (msg != null)
+            {
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <div class="alert alert-danger">
+                            <strong>@msg</strong>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="form-group">
+                <label asp-for="StudentId" class="col-sm-3 control-label">
+                    Student
+                </label>
+                <div class="col-sm-6">
+                    <select class="form-control col-sm-6"
+                            asp-for="StudentId">
+                        @foreach (var item in students)
+                        {
+                            <option value="@item.value">@item.text</option>
+                        }
+                    </select>
+                </div>
+                <div class="has-error">
+                    <span asp-validation-for="StudentId" class="text-danger"></span>
+                </div>
+            </div>
+            
+            <!-- To be implemented: Complete the input blocks for Semester, ModuleId and Grade -->
+
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

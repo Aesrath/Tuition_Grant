@@ -1,0 +1,12 @@
+﻿@model ShirtOrder
+
+<img id="imgShirt" src="~/images/shirt.png"
+     style="position:absolute;left:0;top:0;width:480px;height:400px;background-color:
+             @Model.Color" />
+<img id="imgPokeBack" 
+     src="@String.Format(@"/images/{0}-200.png", Model.PokedexId)"
+     style="position:absolute;left:300px;top:130px;height:130px;width:130px" />
+<img id="imgPokeFront" 
+     src="@String.Format(@"/images/{0}-200.png", Model.PokedexId) "
+     style="position:absolute;left:
+             @String.Format("{0}px", Model.FrontPosition==0? 60:130);top:150px;height:40px;width:40px" />

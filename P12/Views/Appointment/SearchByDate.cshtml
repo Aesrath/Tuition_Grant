@@ -1,0 +1,51 @@
+﻿@using P12.Models
+@model List<Appointment>
+
+@{
+    ViewBag.Title = "SearchResult";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    function loadAppointments() {
+        // To be implemented: Load partial view through GetApptByDate action into divAppointments based on the value of TxtAppDate
+	var appDate = $('#TxtAppDate').val();
+	var url = "/Appointment/GettApptByDate/" + apptDate;
+	$("#diveAppointment").load(url);
+    }
+
+    $(document).ready(function () {
+
+
+        $("#BtnGet").click(function () {
+            loadAppointments();
+        });
+    });
+</script>
+<h2>Search By Appointment Date</h2>
+
+<p>
+    <div class="row">
+        <div class='col-sm-12'>
+            <div class="form-group">
+                <label for="TxtApptDate" class="col-sm-1 control-label" style="padding-right:0">Date : </label>
+                <div class='input-group date col-sm-4' id='BsDateTimePicker'>
+                    <input type='text' class="form-control col-sm-3" id="TxtApptDate" value="@ViewBag.ApptDate" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+                <div class='col-sm-6'>
+                    <br />
+                    <input type="button" value="Get Appointments" id="BtnGet" />
+                </div>
+            </div>
+        </div>
+    </div>
+</p><br /><br />
+
+<div id="divAppointments">
+    @{
+        Html.RenderPartial("_Appointments");
+    }
+</div>

@@ -1,0 +1,35 @@
+﻿@model List<SRBooking>
+
+@{
+   ViewBag.Title = "Index";
+   Layout = "~/Views/Shared/_SingRoomLayout.cshtml";
+}
+
+<h2>Students' Bookings </h2>
+<span style="color:red">@TempData["Msg"]</span>
+<table class="table table-bordered table-condensed table-hover table-striped">
+   <tr>
+      <th class="col-sm-1"><a asp-action="sortID" asp-route-id="b.Id">Student ID</a></th>
+      <th class="col-sm-2"><a asp-action="sortName" asp-route-name="b.Name">Name</a></th>
+      <th class="col-sm-2"><a asp-action="sortCost" asp-route-cost="b.Cost">NRIC/FIN</a></th>
+      <th class="col-sm-2">Slot booked</th>
+   </tr>
+   @foreach (SRBooking b in Model)
+   {
+       int i = 1600;
+      <tr>
+          <td>
+              @b.Id
+          </td>
+         <td>@b.Name
+            </td>
+         <td>
+             @b.Cost
+          </td>
+         <td>To be implemented</td>
+       
+      </tr>
+       
+   }
+</table>
+

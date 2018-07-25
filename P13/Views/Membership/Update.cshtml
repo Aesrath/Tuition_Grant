@@ -1,0 +1,64 @@
+﻿@model Member
+
+@{
+    ViewBag.Title = "Update Member";
+    List<dynamic> levels = ViewData["levels"] as List<dynamic>;
+    levels.Insert(0,new { value = "", text = "-- SELECT --" });
+}
+
+<h2>Update Member</h2>
+
+<div class="row">
+    <div class="col-sm-12">
+        <form asp-controller="Membership" asp-action="Update"
+              class="form-horizontal" role="form">
+            <div class="form-horizontal">
+
+                <!-- To be implemented: Add input controls for member id, member name,
+					happiness level id, and phone with proper validation message control -->
+				<div class="form-group">
+					<label asp-for="Id" class="col-sm-4 control-label"></label>
+					<div class="col-sm-6">
+						<input asp-for="Id" class="form-control" readonly ="readonly" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label asp-for="Name" class="col-sm-4 control-label"></label>
+					<div class="col-sm-6">
+						<input asp-for="Name" class="form-control" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label asp-for="HappinessLevel" class="col-sm-4 control-label">
+						Happiness Level
+					</label>
+					<div class="col-sm-6">
+						<select class="form-control col-sm-6"
+								asp-for="HappinessLevel">
+							@foreach (var item in levels)
+							{
+								<option value="@item.value">@item.text</option>
+							}
+						</select>
+					</div>
+					<div class="has-error">
+						<span asp-validation-for="HappinessLevel" class="text-danger"></span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label asp-for="Phone" class="col-sm-4 control-label"></label>
+					<div class="col-sm-6">
+						<input asp-for="Phone" class="form-control" />
+					</div>
+				</div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-10">
+                        <input type="submit" value="Update" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

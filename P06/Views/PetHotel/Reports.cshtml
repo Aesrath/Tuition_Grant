@@ -1,0 +1,92 @@
+﻿@{
+    var report1 = ViewData["Report1"] as List<dynamic>;
+    var report2 = ViewData["Report2"] as List<dynamic>;
+    var report3 = ViewData["Report3"] as List<dynamic>;
+    var report4 = ViewData["Report4"] as List<dynamic>;
+}
+
+
+<div class="container">
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#Report1">Number of Bookings by Customer</a></li>
+        <li><a data-toggle="tab" href="#Report2">Number of Bookings by Pet Type</a></li>
+        <li><a data-toggle="tab" href="#Report3">Sales by Customer</a></li>
+        <li><a data-toggle="tab" href="#Report4">Sales by Pet Type</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="Report1" class="tab-pane fade in active">
+            <div>
+                <table class="table table-bordered table-condensed table-hover table-striped">
+                    <tr>
+                        <th>Customer</th>
+                        <th>Number of Bookings</th>
+                    </tr>
+                    @foreach (var r in report1)
+                    {
+                        <tr>
+                            <td>@r.Customer</td>
+                            <td>@r.NumberOfBookings</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+        <div id="Report2" class="tab-pane fade">
+            <div>
+                <table class="table table-bordered table-condensed table-hover table-striped">
+                    <tr>
+                        <th>Pet Type</th>
+                        <th>Number of Bookings</th>
+                    </tr>
+                    @foreach (var r in report2)
+                    {
+                        <tr>
+                            <td>@r.PetType</td>
+                            <td>@r.NumberOfBookings</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+        <div id="Report3" class="tab-pane fade">
+            <div>
+                <table class="table table-bordered table-condensed table-hover table-striped">
+                    <tr>
+                        <th>Customer</th>
+                        <th>Sales</th>
+                        <th>Spending Per Booking</th>
+                    </tr>
+                    @foreach (var r in report3)
+                    {
+                        <tr>
+                            <td>@r.Customer</td>
+                            <td>@String.Format("{0:0.00}", r.Sales)</td>
+                            <td>@String.Format("{0:0.00}", r.AvgSales)</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+        <div id="Report4" class="tab-pane fade">
+            <div>
+                <table class="table table-bordered table-condensed table-hover table-striped">
+                    <tr>
+                        <th>Pet Type</th>
+                        <th>Sales</th>
+                        <th>Spending Per Booking</th>
+                    </tr>
+                    @foreach (var r in report4)
+                    {
+                        <tr>
+                            <td>@r.PetType</td>
+                            <td>@String.Format("{0:0.00}", r.Sales)</td>
+                            <td>@String.Format("{0:0.00}", r.AvgSales)</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,43 @@
+﻿@using P13.Models
+@{
+    Layout = "_ExerciseLayout";
+}
+@section ScriptSection{
+    <script>
+        function ajaxLoadOrderList() {
+             // TODO P13 Exercise 1c: Perform partial page upload by calling the Exercise controller GetOrderL istByProductId and load the returned content to #orderList element
+			var id = $("#txtProductId").val();
+			var url = "/Exercise/GetOrderListByProductId/" + id;
+			$("#orderList").load(url);
+        }
+
+        $(document).ready(function () {
+            $("#btnGetOrders").click(ajaxLoadOrderList);
+        });
+    </script>
+}
+<h2>Partial Page Update Exercise</h2>
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Product Id</label>
+        <div class="col-sm-5">
+            <input id="txtProductId" type="text" class="form-control">
+        </div>
+        <button class="btn btn-primary col-sm-2" id="btnGetOrders">Get Orders</button>
+    </div>
+    <br />
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td>Order Id</td>
+                <td>Order Date</td>
+                <td>Qty</td>
+            </tr>
+        </thead>
+        <tbody id="orderList">
+            @{
+                Html.RenderPartial("_OrderList");
+            }
+        </tbody>
+    </table>
+</div>

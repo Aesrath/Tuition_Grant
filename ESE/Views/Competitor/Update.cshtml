@@ -1,0 +1,93 @@
+﻿@model Competitor
+
+@{
+
+	ViewBag.Title = "Update Competitor";
+
+	var areas = ViewData["areas"] as List<dynamic>;
+
+	areas.Insert(0, new { value = "0", text = "-- SELECT --" });
+
+}
+
+
+
+<div class="row">
+
+	<h2 class="col-sm-offset-1">@ViewData["Title"]</h2>
+
+	<div class="col-sm-6">
+
+		<form asp-controller="Competitor" asp-action="Update" method="post"
+			  class="form-horizontal">
+
+			<div class="form-horizontal">
+			
+				<div class="form-group">
+					<label asp-for="Id" class="col-sm-4 control-label">Id</label>
+					<div class="col-sm-6">
+						<input asp-for="Id" class="form-control" readonly="readonly" />
+					</div>
+				</div>
+				<div class="has-error">
+					<span asp-validation-for="Id" class="text-danger"></span>
+				</div>
+
+				<div class="form-group">
+					<label asp-for="Name" class="col-sm-4 control-label">Name</label>
+					<div class="col-sm-6">
+						<input asp-for="Name" class="form-control" />
+					</div>
+				</div>
+				<div class="has-error">
+					<span asp-validation-for="Name" class="text-danger"></span>
+				</div>
+
+				<div class="form-group">
+					<label asp-for="SkillAreaId" class="col-sm-4 control-label">
+						Skill Area
+					</label>
+					<div class="col-sm-6">
+						<select class="form-control col-sm-6"
+								asp-for="SkillAreaId">
+							@foreach (var item in areas)
+							{
+								<option value="@item.value">@item.text</option>
+							}
+						</select>
+					</div>
+					<div class="has-error">
+						<span asp-validation-for="SkillAreaId" class="text-danger"></span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label asp-for="IsFirstTime" class="col-sm-4 control-label">First time?</label>
+					<div class="col-sm-6">
+						<input asp-for="IsFirstTime" type="checkbox" class="checkbox-inline" />
+					</div>
+				</div>
+
+
+
+				<!-- COMPLETE CODE WITH YOUR ANSWER -->
+
+
+
+				<div class="form-group">
+
+					<div class="col-sm-offset-2 col-sm-10">
+
+						<input type="submit" value="Update" class="btn btn-default" />
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</form>
+
+	</div>
+
+</div>

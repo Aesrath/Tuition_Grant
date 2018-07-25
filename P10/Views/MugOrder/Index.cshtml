@@ -1,0 +1,72 @@
+﻿@model List<MugOrder>
+
+@{
+    ViewBag.Title = "Mug Orders";
+}
+
+@section ScriptSection {
+    <script>
+        function ConfirmDelete() {
+                /* TODO P10 Task 2-1 Use javascript confirm method to confirm the action to delete as follows:
+                     1. The message displayed is "Are you sure you want to delete?"
+                     2. If user click <Cancel>, which the confirm method return false then cancel the delete action
+                 */
+			if (confirm("Are you sure you want to delete?") == false) {
+				event.preventDefault();
+				event.stopPropagation();
+				return false;
+			}
+		}
+
+    </script>
+}
+<h2>Mug Orders</h2>
+
+<span style="color:red">@TempData["Msg"]</span><br />
+<p>
+    <a asp-controller="MugOrder" asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <tr>
+        <th>Id</th>
+        <th>Color</th>
+        <th>Qty</th>
+        @{ 
+            // TODO P10 Task 1-3: Using User.IsInRole method to determine whether current user is Admin role and display the Created By column header
+        }
+		@if (User.IsInRole("Admin"))
+		{
+			<th>Created By</th>
+
+		}
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.Id
+            </td>
+            <td>
+                @item.Color
+            </td>
+            <td>
+                @item.Qty
+            </td>
+            @{ 
+              // TODO P10 Task 1-4: Using User.IsInRole method to determine whether current user is Admin role and display the Created By column data
+            }
+			@if (User.IsInRole("Admin"))
+			{
+				<th>Created By</th>
+
+			}
+            <td>
+                <a asp-action="Update" asp-route-id="@item.Id">Update</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" onclick="return ConfirmDelete()">Delete</a>
+            </td>
+        </tr>
+    }
+</table>

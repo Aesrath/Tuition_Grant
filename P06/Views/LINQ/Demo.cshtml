@@ -1,0 +1,246 @@
+﻿@using System.Dynamic
+@{
+    Layout = null;
+    var result1 = ViewData["result1"] as List<Order>;
+    var result2 = ViewData["result2"] as List<Data1>;
+    var result3 = ViewData["result3"] as List<dynamic>;
+    var result4 = ViewData["result4"] as List<dynamic>;
+    dynamic result5 = ViewData["result5"] as ExpandoObject;
+    var result6 = ViewData["result6"] as List<dynamic>;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>LINQ Demo</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>LINQ Demo</h2>
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#Demo1">No projection</a></li>
+            <li><a data-toggle="tab" href="#Demo2">Projection with Pre-defined class</a></li>
+            <li><a data-toggle="tab" href="#Demo3">Simple Projection with ExpandoObject</a></li>
+            <li><a data-toggle="tab" href="#Demo4">Projection with filter &amp; sorting</a></li>
+            <li><a data-toggle="tab" href="#Demo5">Aggregates</a></li>
+            <li><a data-toggle="tab" href="#Demo6">Aggregates with Sorting &amp; Grouping</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="Demo1" class="tab-pane fade in active">
+                <h5>LINQ Query:</h5>
+                <p>
+                    <pre style="font-family:Consolas;font-size:small">
+var result1 = orders;
+ViewData["result1"] = result1;
+                   </pre>
+                </p>
+                <br />
+                <h5>Result displayed:</h5>
+                <div>
+                    <table class="table table-bordered table-condensed table-hover table-striped">
+                        <tr>
+                            <th>ProductId</th>
+                            <th>Qty</th>
+                            <th>Category</th>
+                            <th>Qty</th>
+                        </tr>
+                        @foreach (var r in result1)
+                        {
+                            <tr>
+                                <td>@r.ProductId</td>
+                                <td>@r.Category</td>
+                                <td>@r.Price</td>
+                                <td>@r.Qty</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+            <div id="Demo2" class="tab-pane fade">
+                <h5>LINQ Query:</h5>
+                <p>
+                    <pre style="font-family:Consolas;font-size:small">
+var result2 = orders.Select(o => new Data1()
+                             {
+                                 Pid = o.ProductId,
+                                 Qty = $"{o.Qty} PCS"
+                             }).ToList&lt;Data1&gt;();
+ViewData["result2"] = result2;
+                   </pre>
+                </p>
+                <br />
+                <h5>Result displayed:</h5>
+                <div>
+                    <table class="table table-bordered table-condensed table-hover table-striped">
+                        <tr>
+                            <th>Pid</th>
+                            <th>Qty</th>
+                        </tr>
+                        @foreach (var r in result2)
+                        {
+                            <tr>
+                                <td>@r.Pid</td>
+                                <td>@r.Qty</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+            <div id="Demo3" class="tab-pane fade">
+                <h5>LINQ Query:</h5>
+                <p>
+                    <pre style="font-family:Consolas;font-size:small">
+var result3 = orders.Select(o =>
+                             {
+                                 dynamic d = new ExpandoObject();
+                                 d.Pid = o.ProductId;
+                                 d.Qty = $"{o.Qty} PCS";
+                                 return d;
+                             }).ToList&lt;dynamic&gt;();
+ViewData["result3"] = result3;
+                   </pre>
+                </p>
+                <br />
+                <h5>Result displayed:</h5>
+                <div>
+                    <table class="table table-bordered table-condensed table-hover table-striped">
+                        <tr>
+                            <th>Pid</th>
+                            <th>Qty</th>
+                        </tr>
+                        @foreach (var r in result3)
+                        {
+                            <tr>
+                                <td>@r.Pid</td>
+                                <td>@r.Qty</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+            <div id="Demo4" class="tab-pane fade">
+                <h5>LINQ Query:</h5>
+                <p>
+                    <pre style="font-family:Consolas;font-size:small">
+var result4 = orders.Where(x =&gt; x.Price &gt; 10)
+                        .OrderByDescending(y =&gt; y.Price)
+                        .Select(z =&gt;
+                        {
+                            dynamic d = new ExpandoObject();
+                            d.Pid = z.ProductId;
+                            d.Cost = z.Qty * z.Price;
+                            return d;
+                        }).ToList&lt;dynamic&gt;();
+ViewData["result4"] = result4;
+                   </pre>
+                </p>
+                <br />
+                <h5>Result displayed:</h5>
+                <div>
+                    <table class="table table-bordered table-condensed table-hover table-striped">
+                        <tr>
+                            <th>Pid</th>
+                            <th>Cost</th>
+                        </tr>
+                        @foreach (var r in result4)
+                        {
+                            <tr>
+                                <td>@r.Pid</td>
+                                <td>@r.Cost</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+            <div id="Demo5" class="tab-pane fade">
+                <h5>LINQ Query:</h5>
+                <p>
+                    <pre style="font-family:Consolas;font-size:small">
+            dynamic result5 = new ExpandoObject();
+            result5.OrdersCount = orders.Count();
+            result5.TotalCost = orders.Sum(o =&gt; o.Price * o.Qty);
+            result5.AveragePrice = orders.Average(o =&gt; o.Price);
+            result5.MinimumPrice = orders.Min(o =&gt; o.Price);
+            result5.MaximumPrice = orders.Max(o =&gt; o.Price);
+            ViewData["result5"] = result5;
+                   </pre>
+                </p>
+                <br />
+                <h5>Result displayed:</h5>
+                <div>
+                    <table class="table table-bordered table-condensed table-hover table-striped">
+                        <tr>
+                            <th>OrdersCount</th>
+                            <th>TotalCost</th>
+                            <th>AveragePrice</th>
+                            <th>MinimumPrice</th>
+                            <th>MaximumPrice</th>
+                        </tr>
+                        <tr>
+                            <td>@result5.OrdersCount</td>
+                            <td>@result5.TotalCost</td>
+                            <td>@result5.AveragePrice</td>
+                            <td>@result5.MinimumPrice</td>
+                            <td>@result5.MaximumPrice</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div id="Demo6" class="tab-pane fade">
+                <h5>LINQ Query:</h5>
+                <p>
+                    <pre style="font-family:Consolas;font-size:small">
+var result6 = orders.OrderBy(o =&gt; o.Category)
+                        .GroupBy(o =&gt; o.Category)
+                        .Select(g =&gt;
+                            {
+                                dynamic d = new ExpandoObject();
+                                d.Cat = g.Key;
+                                d.OrdersCount = g.Count();
+                                d.TotalCost = g.Sum(o =&gt; o.Price * o.Qty);
+                                d.AveragePrice = g.Average(o =&gt; o.Price);
+                                d.MinimumPrice = g.Min(o =&gt; o.Price);
+                                d.MaximumPrice = g.Max(o =&gt; o.Price);
+                                return d;
+                            }
+                        ).ToList&lt;dynamic&gt;();
+ViewData["result6"] = result6;
+                   </pre>
+                </p>
+
+                <br />
+                <h5>Result displayed:</h5>
+                <div>
+                    <table class="table table-bordered table-condensed table-hover table-striped">
+                        <tr>
+                            <th>Cat</th>
+                            <th>OrdersCount</th>
+                            <th>TotalCost</th>
+                            <th>AveragePrice</th>
+                            <th>MinimumPrice</th>
+                            <th>MaximumPrice</th>
+                        </tr>
+                        @foreach (var r in result6)
+                        {
+                            <tr>
+                                <td>@r.Cat</td>
+                                <td>@r.OrdersCount</td>
+                                <td>@r.TotalCost</td>
+                                <td>@r.AveragePrice</td>
+                                <td>@r.MinimumPrice</td>
+                                <td>@r.MaximumPrice</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

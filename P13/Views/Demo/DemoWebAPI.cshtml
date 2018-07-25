@@ -1,0 +1,157 @@
+﻿@using P13.Models
+@{
+    Layout = "_DemoLayout";
+}
+
+@section ScriptSection{
+    <script>
+        function ajaxGetCurrentTime() {
+            var apiUrl = "/api/Demo/Now";
+            var txtCurrentTime = $("#txtCurrentTime");
+            txtCurrentTime.val("");
+            $.getJSON(apiUrl,
+                function (result) {
+                    txtCurrentTime.val(result);
+                });
+        }
+
+        function ajaxGetCurrentStock() {
+            var productId = $("#txtProductId1").val();
+            var apiUrl = "/api/Demo/Inventory/" + productId;
+            var txtCurrentStock = $("#txtCurrentStock");
+            txtCurrentStock.val("");
+            $.getJSON(apiUrl,
+                function (result) {
+                    txtCurrentStock.val(result);
+                });
+        }
+
+        function ajaxGetProduct() {
+            var productId = $("#txtProductId2").val();
+            var apiUrl = "/api/Demo/" + productId;
+            var txtDescription = $("#txtProductDescription");
+            var txtQty = $("#txtProductQty");
+            txtDescription.val("");
+            txtQty.val("");
+            $.getJSON(apiUrl,
+                function (result) {
+                    txtDescription.val(result.description);
+                    txtQty.val(result.qty);
+                });
+        }
+
+        function ajaxGetProductIds() {
+            var apiUrl = "/api/Demo/productids";
+            var ddlProductIds = $("#ddlProductIds");
+            ddlProductIds.html("<option val=''>-- SELECT --</option>");
+            $.getJSON(apiUrl,
+                function (result) {
+                    $.each(result, function (i, field) {
+                        ddlProductIds.append(
+                                            "<option val='" + field + "'>" +
+                                            field + "</option>");
+                    });
+                });
+        }
+
+        function ajaxGetProducts() {
+            var apiUrl = "/api/Demo";
+            var ddlProducts = $("#ddlProducts");
+            ddlProducts.html("<option val=''>-- SELECT --</option>");
+            $.getJSON(apiUrl,
+                function (result) {
+                    $.each(result, function (i, field) {
+                        ddlProducts.append(
+                                            "<option val='" + field.id + "'>" +
+                                            field.description + "</option>");
+                    });
+                });
+        }
+
+        function clearDdl1() {
+            $("#ddlProductIds").html('');
+        }
+
+        function clearDdl2() {
+            $("#ddlProducts").html('');
+        }
+
+        $(document).ready(function () {
+            $("#btn1").click(ajaxGetCurrentTime);
+            $("#btn2").click(ajaxGetCurrentStock);
+            $("#btn3").click(ajaxGetProduct);
+            $("#btn4").click(clearDdl1);
+            $("#btn5").click(ajaxGetProductIds);
+            $("#btn6").click(clearDdl2);
+            $("#btn7").click(ajaxGetProducts);
+        })
+    </script>
+}
+<h2>Demo Web API</h2>
+<div class="form-horizontal">
+    <h4>Web API that returns a string</h4>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Current time</label>
+        <div class="col-sm-5">
+            <input id="txtCurrentTime" type="text" class="form-control">
+        </div>
+        <button class="btn btn-primary col-sm-2" id="btn1">Get Current Time</button>
+    </div>
+    <br />
+    <h4>Web API that returns a number</h4>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Product Id</label>
+        <div class="col-sm-5">
+            <input id="txtProductId1" type="text" class="form-control">
+        </div>
+        <button class="btn btn-primary col-sm-2" id="btn2">Get Current Stock</button>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Current Stock</label>
+        <div class="col-sm-5">
+            <input id="txtCurrentStock" type="text" class="form-control">
+        </div>
+    </div>
+    <br />
+    <h4>Web API that returns an object</h4>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Product Id</label>
+        <div class="col-sm-5">
+            <input id="txtProductId2" type="text" class="form-control">
+        </div>
+        <button class="btn btn-primary col-sm-2" id="btn3">Get Product</button>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Product Description</label>
+        <div class="col-sm-5">
+            <input id="txtProductDescription" type="text" class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Product Qty</label>
+        <div class="col-sm-5">
+            <input id="txtProductQty" type="text" class="form-control">
+        </div>
+    </div>
+    <br />
+    <h4>Web API that returns a list of numbers</h4>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Product Ids</label>
+        <div class="col-sm-5">
+            <select id="ddlProductIds"></select>
+        </div>
+        <button class="btn btn-primary col-sm-1" style="margin-left:5px" id="btn4">Clear</button>
+        <button class="btn btn-primary col-sm-2" style="margin-left:10px" id="btn5">Get Product Ids</button>
+    </div>
+    <br />
+    <h4>Web API that returns a list of objects</h4>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Products</label>
+        <div class="col-sm-5">
+            <select id="ddlProducts"></select>
+        </div>
+        <button class="btn btn-primary col-sm-1" style="margin-left:5px" id="btn6">Clear</button>
+        <button class="btn btn-primary col-sm-2" style="margin-left:10px" id="btn7">Get Products</button>
+    </div>
+    <br />
+</div>

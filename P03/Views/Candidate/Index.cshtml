@@ -1,0 +1,25 @@
+﻿@model List<Candidate>
+@{
+   Layout = "_Candidate";
+}
+
+<h1>@ViewBag.Title</h1>
+<div class="row">
+   @foreach (Candidate can in Model)
+   {
+      <div class="col-sm-3">
+         <div class="panel panel-default">
+            <div class="panel-heading">
+               <a href="~/candidate/display/@can.RegNo">
+                  @can.Name
+               </a>
+            </div>
+            <div class="panel-body">
+               <img src="~/candidates/@can.PicFile" width="100">
+            </div>
+         </div>
+      </div>
+
+   }
+</div>
+

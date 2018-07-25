@@ -1,0 +1,56 @@
+﻿@model List<ShirtOrder>
+
+@{
+    ViewBag.Title = "Shirt Orders";
+}
+
+@section ScriptSection {
+    <script>
+        // Implement confirmDelete function here
+    </script>
+}
+
+<h2>Shirt Orders</h2>
+
+<span style="color:red">@TempData["Msg"]</span><br />
+<p>
+    <a asp-controller="ShirtOrder" asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Qty</th>
+        <th>Subtotal</th>
+	<!-- Implement data security -->
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.Id
+            </td>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @item.Price
+            </td>
+            <td>
+                @item.Qty
+            </td>
+            <td>
+                @String.Format("{0:0.00}", item.Price * item.Qty)
+            </td>
+            <!-- Implement data security -->
+            <td>
+                <a asp-action="Update" asp-route-id="@item.Id">Update</a>
+                <!-- add link to navigate to ShirtOrderController Delete action -->
+            </td>
+        </tr>
+    }
+</table>

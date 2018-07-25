@@ -1,0 +1,43 @@
+﻿@using P12.Models
+@model List<Patient>
+
+@{
+    ViewBag.Title = "All Patients";    
+}
+
+<h2>All Patients</h2>
+
+<span style="color:red">@TempData["Msg"]</span><br />
+<table class="table table-bordered table-condensed table-hover table-striped">
+    <tr>
+        <th>Patient Id</th>
+        <th>IC/Passport No.</th>
+        <th>Name</th>
+        <th>Citizenship</th>
+        <th>Action</th>
+    </tr>
+    @foreach (Patient patient in Model)
+    {
+        <tr>
+            <td><a asp-controller="Patient" asp-action="Update" asp-route-id="@patient.Id">
+                    @patient.Id
+                </a></td>
+            <td>@patient.Icpassport</td>
+            <td>@patient.Name</td>
+            <td>@if (patient.Citizenship == 1)
+            {
+                <text>SPR</text>
+            }
+            else if (patient.Citizenship == 2)
+            {
+                <text>Singapore Citizen</text>
+            }
+            else
+            {
+                <text>Foreign</text>
+            }
+            </td>
+            <td><a asp-controller="Appointment" asp-action="Create" asp-route-id="@patient.Id">Create Appointment</a></td>
+        </tr>
+    }
+</table>

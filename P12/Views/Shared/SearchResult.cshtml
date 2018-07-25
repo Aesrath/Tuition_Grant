@@ -1,0 +1,14 @@
+﻿@using P12.Models
+@model List<Appointment>
+
+@{
+    ViewBag.Title = "SearchResult";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@{ 
+    Html.RenderPartial("_SearchResult");
+}
+

@@ -1,0 +1,29 @@
+﻿@model int
+
+@{
+    Layout = "_ExLayout";
+}
+
+<!--
+    TODO P07 Razor Ex02: if the number passed from the controller is more than 1500,
+        display: The housing capacity is big
+    if it is less than or equal to 1500, but more than 1000,
+        display: The housing capacity is normal
+    Otherwise,
+        display: The housing capacity is small
+-->
+@if (Model > 1500)
+{
+	<p>The housing capacity is big</p>
+
+}
+else if (Model <= 1500 && Model > 1000)
+{
+	<p>The housing capacity is normal</p>
+
+}
+else
+{
+	<p> The housing capacity is small</p>
+
+}

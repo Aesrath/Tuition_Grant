@@ -1,0 +1,47 @@
+﻿@model Pokedex
+@{
+
+}
+
+<div class="row">
+   <h1>@Model.Name</h1>
+   <img src="~/images/@(Model.Id)-200.png" />
+</div>
+
+<div class="row">
+   <dl class="dl-horizontal">
+      <dt>ID : </dt>
+      <dd>@Model.Id</dd>
+      <dt>Type : </dt>
+      <dd>@Model.Type1</dd>
+      <dt>Type2 : </dt>
+      <dd>@Model.Type2</dd>
+
+      <dt>Attack : </dt>
+      @if (Model.Attack > Model.Defence)
+      {
+         <dd><b>@Model.Attack</b></dd>
+      }
+      else
+      {
+         <dd>@Model.Attack </dd>
+      }
+
+      <dt>Defence : </dt>
+      @if (Model.Defence > Model.Attack)
+      {
+         <dd><b>@Model.Defence</b></dd> 
+      }
+      else
+      {
+         <dd>@Model.Defence </dd>
+      }
+
+      <dt>Stamina : </dt>
+      <dd>@Model.Stamina </dd>
+   </dl>
+
+</div>
+
+
+

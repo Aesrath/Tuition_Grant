@@ -1,0 +1,26 @@
+﻿@model List<Member>
+@{
+    ViewBag.Title = "Update member";
+}
+
+<div class="col-sm-offset-1">
+    <h2>All Members</h2>
+    <span style="color:red">@TempData["Msg"]</span>
+    <table class="table">
+        <tr>
+            <th>Member ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+        @foreach (Member m in Model)
+            {
+            <tr>
+                <td>@m.Id</td>
+                <td>@m.Name</td>
+                <td>@m.Phone</td>
+                <td><a asp-action="Update" asp-route-id="@m.Id">Edit</a></td>
+            </tr>
+        }
+    </table>
+</div>

@@ -1,0 +1,45 @@
+﻿@model List<dynamic>
+@{
+   Layout = "_ExLayout";
+   var columns = Model[0] as IDictionary<string, object>;
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+   <pre>List&lt;dynamic&gt; data = DBUtl.GetList("SELECT * FROM Pokedex");</pre>
+   <pre>@ViewData["Query"]</pre>
+</div>
+
+@if (Model != null)
+{
+<table class="table table-bordered table-condensed table-hover table-striped">
+   <thead>
+      <tr>
+         @foreach (string title in columns.Keys)
+         {
+            <td>@title</td>
+         }
+      </tr>
+   </thead>
+
+   @foreach (dynamic row in Model)
+   {
+       var obj = row as IDictionary<string, object>;
+      <tr>
+         @foreach (string heading in columns.Keys)
+         {
+            <td>@obj[heading]</td>
+         }
+      </tr>
+   }
+</table>
+}
+else
+{
+    <h3>No data passed in</h3>
+
+}
+<div class="row">
+   <a asp-action="Index">Back to Pokemon/Index</a>
+</div>

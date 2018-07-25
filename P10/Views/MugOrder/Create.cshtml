@@ -1,0 +1,102 @@
+﻿@model MugOrder
+
+@{
+	ViewBag.Title = "New Mug Order";
+}
+
+@section ScriptSection {
+	<script>
+		function AjaxLoadMug() {
+			var color = "silver";
+
+			// TODO P10 Task 3-3 Use .is method to identify which radio button is checked and use val() method to assign the radio button's value to variable color
+			if ($("#rdColor1").is(":checked"))
+			{
+				color = $("#rdColor1").val();
+			}
+			else if ($("#rdColor2").is(":checked"))
+			{
+				color = $("#rdColor2").val();
+			}
+
+			// TODO P10 Task 3-4 Use val() method to assign the current selected value of ddlPoke to variable pokedexid
+			//var pokedexid = "";
+			var pokedexid = $("#ddlPoke").val();
+
+			// TODO P10 Task 3-5 Form the url to call the LoadMug action
+			//    Sample: /MugOrder/LoadMug?color=white&pokedexid=10
+			var url = "/MugOrder/LoadShirt?color=" + color + "&pokedexid=" + pokedexid;
+
+			// TODO P10 Task 3-6 Use jQuery load method to call the LoadMug action and replace the content of divPreview with the returned result
+			// $("#divPreview").??
+			$("#divPreview").load(url);
+		}
+
+		function CalcSubtotal() {
+			var qty = $("#txtQty").val();
+			var price = 10.00;
+			var rate = 1;
+			if (selectedCurrency == "USD")
+				rate = rateUSD;
+			var subtotal = qty * price * rate;
+			$("#txtSubtotal").val(subtotal.toFixed(2));
+		}
+
+		$(document).ready(function () {
+			// Call the AjaxLoadMug method when different radio button is selected
+			$("#rdColor1").change(AjaxLoadMug);
+			$("#rdColor2").change(AjaxLoadMug);
+
+			// TODO P10 Task 3-7 Call the AjaxLoadMug method when ddlPoke selection changed by user
+			$("#ddlPoke").change(AjaxLoadMug);
+			// Calculate subtotal
+			$("#txtQty").change(CalcSubtotal);
+
+			$("form").submit(function () {
+				confirm("Proceed? Press OK to confirm.");
+			});
+		});
+
+
+	</script>
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+	<div class="col-sm-7">
+		<form asp-controller="MugOrder" asp-action="Create" method="post" class="form-horizontal" role="form">
+			<div class="form-horizontal">
+				@{
+					Html.RenderPartial("_MugOrder");
+				}
+				<div class="form-group">
+					<label class="col-sm-3 control-label">Subtotal: </label>
+					<div class="col-sm-6" style="padding-right:15px">
+						<input id="txtSubtotal" class="form-control" readonly="readonly" value="0" />
+					</div>
+					<div class="col-sm-1" style="padding-left:0">
+						@{
+							Html.RenderPartial("_MugCurrencySelector");
+						}
+					</div>
+
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-3 col-sm-10">
+						<input type="submit" value="Create" class="btn btn-default" />
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div id="divPreview" class="col-sm-5">
+		@{
+			// TODO P10 Task 3-8 Use Html.RenderPartial to render partial view _ShowMug with an empty MugOrder object as model
+			// Html.RenderPartial...
+
+			Html.RenderPartial("_ShowMug", new MugOrder());
+		}
+	</div>
+
+</div>

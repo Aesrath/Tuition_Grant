@@ -1,0 +1,83 @@
+﻿@model MugOrder
+
+@{
+    ViewBag.Title = "Update Mug Order";
+}
+
+@section ScriptSection {
+    <script>
+        function AjaxLoadMug() {
+            var color = $("#rdColor1").is(":checked") ? $("#rdColor1").val() : color = $("#rdColor2").val();
+            var pokedexid = $("#ddlPoke").val();
+            var url = "/MugOrder/LoadMug?color=" + color + "&pokedexid=" + pokedexid;
+            $("#divPreview").load(url);
+        }
+
+        function CalcSubtotal() {
+            var qty = $("#txtQty").val();
+            var price = 10.00;
+            var rate = 1;
+            if (selectedCurrency == "USD")
+                rate = rateUSD;
+            var subtotal = qty * price * rate;
+            $("#txtSubtotal").val(subtotal.toFixed(2));
+        }
+
+        $(document).ready(function () {
+            // Reload the _ShowMug partial view whenever rdColor1, rdColor2 and ddlPoke changes
+            $("#rdColor1").change(AjaxLoadMug);
+            $("#rdColor2").change(AjaxLoadMug);
+            $("#ddlPoke").change(AjaxLoadMug);
+
+            // Calculate subtotal
+            $("#txtQty").change(CalcSubtotal);
+
+            $("form").submit(function () {
+                confirm("Proceed? Press OK to confirm.");
+            });
+        });
+
+    </script>
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="col-sm-7">
+        <form asp-controller="MugOrder" asp-action="Update" method="post" class="form-horizontal" role="form">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label asp-for="Id" class="col-sm-3 control-label"></label>
+                    <div class="col-sm-6">
+                        <input asp-for="Id" class="form-control" readonly="readonly" />
+                    </div>
+                </div>
+                @{
+                    Html.RenderPartial("_MugOrder");
+                }
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Subtotal: </label>
+                    <div class="col-sm-6" style="padding-right:15px">
+                        <input id="txtSubtotal" class="form-control" readonly="readonly" value="@String.Format("{0:0.00}", Model.Qty * 10)" />
+                    </div>
+                    <div class="col-sm-1" style="padding-left:0">
+                        @{
+                            Html.RenderPartial("_MugCurrencySelector");
+                        }
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-10">
+                        <input type="submit" value="Update" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="divPreview" class="col-sm-5">
+        <img id="imgMug" src="~/images/mug.png" style="position:absolute;left:0;top:0;width:300px;height:300px;background-color:@Model.Color" />
+        <img id="imgPoke" src="@String.Format(@"/images/{0}-200.png",Model.PokedexId)" style="position:absolute;left:20px;top:70px;height:180px;width:180px" />
+    </div>
+
+</div>

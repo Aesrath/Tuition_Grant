@@ -1,0 +1,144 @@
+﻿@model Candidate
+@{
+	Layout = "_Candidate";
+	string msg = ViewData["msg"] as string;
+
+	var GenderArray = new[] { new { value = 'M', text = "Male"},
+							 new { value = 'F', text = "Female"} };
+
+	var RaceArray = new[] { new { value="",   text="--Select--"},
+						   new { value="CH", text="Chinese"},
+						   new { value="MA", text="Malay"},
+						   new { value="IN", text="Indian"},
+						   new { value="OT", text="Others"} };
+
+}
+
+<div class="row">
+	<div class="col-sm-offset-2 col-sm-4">
+		<h2>New Candidate</h2>
+	</div>
+</div>
+
+@{
+	//TODO: P03 Task 3a - Add TWO Tag Helper Attributes for form element
+	
+}
+
+<form asp-controller="Candidate"
+	  asp-action="Create"
+	  method="post"
+	  enctype="multipart/form-data"
+	  class="form-horizontal">
+
+
+	@if (msg != null)
+	{
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-4">
+				<div class="alert alert-danger">
+					<strong>@msg</strong>
+				</div>
+			</div>
+		</div>
+	}
+
+	<div class="form-group">
+		@{
+			//TODO: P03 Task 3b - Add Tag Helper Attribute for SEVEN label elements
+			//                    They are Reg#, Name, Height, BirthDate, Gender, Race, Clearance
+			//
+		}
+		<label class="control-label col-sm-2" asp-for="RegNo">Reg# :</label>
+		<div class="col-sm-4">
+			@{
+//TODO: P03 Task 3c - Add Tag Helper Attribute for SEVEN input elements
+//                    They are Reg#, Name, Height, BirthDate, Gender, Race, Clearance
+//
+			}
+			<input asp-for="RegNo" class="form-control" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="control-label col-sm-2" asp-for="Name">Name : </label>
+		<div class="col-sm-4">
+			<input asp-for="Name" class="form-control" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="control-label col-sm-2" asp-for="Height">Height : </label>
+		<div class="col-sm-4">
+			<input asp-for="Height" class="form-control" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="control-label col-sm-2" asp-for="BirthDate">BirthDate : </label>
+		<div class="col-sm-4">
+			<div class='input-group date' id='BsDateTimePicker'>
+				<input asp-for="BirthDate" placeholder="YYYY-MM-DD" class="form-control" />
+				<span class="input-group-addon">
+					<span class="glyphicon glyphicon-calendar"></span>
+				</span>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="control-label col-sm-2" asp-for="Gender">Gender: </label>
+		<div class="col-sm-4">
+			@foreach (var item in GenderArray)
+			{
+				<input asp-for="Gender" type="radio"
+										value="@item.value"
+										class="radio-inline" /> @item.text
+			}
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="control-label col-sm-2" asp-for="Race">Race: </label>
+		<div class="col-sm-4">
+			<select asp-for="Race" class="form-control">
+				@foreach (var item in RaceArray)
+				{
+					<option value="@item.value">@item.text</option>
+				}
+			</select>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="control-label col-sm-2" asp-for="Clearance">Clearance: </label>
+		<div class="col-sm-4">
+			<input asp-for="Clearance" type="checkbox"
+				   class="checkbox-inline" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="control-label col-sm-2">Photo:</label>
+		<div class="col-sm-4">
+			<input type="file" name="photo"
+				   class="form-control" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-4">
+			<input type="submit" value="Add"
+				   class="btn btn-primary" />
+		</div>
+	</div>
+
+</form>
+
+<script type="text/javascript">
+	$(function () {
+		$('#BsDateTimePicker').datetimepicker({
+			format: 'YYYY-MM-DD'
+		});
+	});
+</script>

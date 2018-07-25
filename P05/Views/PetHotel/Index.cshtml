@@ -1,0 +1,32 @@
+﻿@model List<PHBooking>
+
+@{
+   ViewBag.Title = "Index";
+   Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>All Bookings</h2>
+<span style="color:red">@TempData["Msg"]</span>
+<table class="table table-bordered table-condensed table-hover table-striped">
+   <tr>
+      <th class="col-sm-1">Booking ID</th>
+      <th class="col-sm-1">Pet Name</th>
+      <th class="col-sm-2">Owner Name</th>
+      <th class="col-sm-2">Check-In Date</th>
+	   <th class="col-sm-2">Action</th>
+   </tr>
+   @foreach (PHBooking b in Model)
+   {
+      <tr>
+         <td>@b.Id</td>
+         <td>@b.PetName</td>
+         <td>@b.OwnerName</td>
+         <td>@string.Format("{0:dd-MM-yyyy}", b.CheckInDate)</td>
+	  	<td>
+	  		<a asp-action="UpdateBooking" asp-route-id="@b.Id" asp-route-isDelete="false">Update</a>
+	  		<a asp-action="UpdateBooking" asp-route-id="@b.Id" asp-route-isDelete="true">Delete</a>
+	  	</td>
+      </tr>
+   }
+</table>
+

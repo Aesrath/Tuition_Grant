@@ -1,0 +1,26 @@
+﻿@using P13.Models
+@{
+    Layout = "_DemoLayout";
+}
+@section ScriptSection{
+    <script>
+        function ajaxLoadProductList(id) {
+            var url = "/Demo/GetProductListSortedBy/" + id;
+            $("#pl").load(url);
+        }
+    </script>
+}
+<h2>Demo Partial Page Update</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <td><a href="#" onclick="return ajaxLoadProductList(0);">Product Id</a></td>
+            <td><a href="#" onclick="return ajaxLoadProductList(1);">Description</a></td>
+        </tr>
+    </thead>
+    <tbody id="pl">
+        @{
+            Html.RenderPartial("_ProductList");
+        }
+    </tbody>
+</table>

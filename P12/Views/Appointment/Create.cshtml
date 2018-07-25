@@ -1,0 +1,93 @@
+﻿@using P12.Models
+@model Appointment
+
+@{
+    ViewBag.Title = "Create New Appointment";
+
+    Patient patient = ViewData["patient"] as Patient;
+    string citizenship = "Foreign";
+    if (patient.Citizenship == 1)
+    {
+        citizenship = "SPR";
+    }
+    else if (patient.Citizenship == 2)
+    {
+        citizenship = "Singapore Citizen";
+    }
+}
+
+<h2>Create New Appointment</h2>
+
+@section ScriptSection {
+    <script>
+        function getDoctors() {
+            // To be implemented: Use jQuery ajax to get list of available doctors from api/Appt/Doctors web api and load these available doctors' ids into ddlDoctorId drop down list.
+            // Hint: the appointment date is the value of TxtApptDate element
+
+        }
+
+        $(document).ready(function () {
+            $("#BsDateTimePicker").on("dp.change", function () {
+                getDoctors()
+            });
+
+            getDoctors();
+        });
+    </script>
+}
+<div class="row">
+    <div class="col-sm-7">
+        <form asp-controller="Appointment" asp-action="Create" method="post" class="form-horizontal" role="form">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label asp-for="PatientId" class="col-sm-4 control-label">Patient Id</label>
+                    <div class="col-sm-6">
+                        <input asp-for="PatientId" class="form-control" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Patient Name</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" value="@patient.Name" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Citizenship</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" value="@citizenship" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">IC/Passport Number</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" value="@patient.Icpassport" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AppDate" class="col-sm-4 control-label">Date</label>
+                    <div class='input-group date col-sm-6'>
+                        <div class='input-group date col-sm-12' id='BsDateTimePicker' style="margin-left:15px">
+                            <input class="form-control" asp-for="AppDate" id="TxtApptDate" value="@String.Format("{0:dd-MM-yyyy}",DateTime.Today)" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="ddlDoctorId" asp-for="DoctorId" class="col-sm-4 control-label">Doctor</label>
+                    <div class="col-sm-6">
+                        <select id="ddlDoctorId" asp-for="DoctorId" class="form-control col-sm-6">
+                            <option value="" selected="selected">-- SELECT --</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+﻿@model int
+
+@{
+    Layout = "_ExLayout";
+}
+
+<!--
+    TODO P07 Razor Ex04: Based on the number passed from the controller, display the phrase "Line x" on every line, 
+    where x starts at 1 and ends at that number
+    
+    Example: number passed from the controller is 5
+    
+    Output will be:
+    Line 1
+    Line 2
+    Line 3
+    Line 4
+    Line 5
+-->
+
+@{ int i = 1;}
+@while (i < Model + 1)
+{
+	<p>Line @i</p>
+	i++;
+
+}

@@ -1,0 +1,20 @@
+﻿@using P13.Models
+@{
+    Layout = "_DemoLayout";
+}
+<h2>Accounting Department</h2>
+<form class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Customer Name</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control col-sm-6">
+        </div>
+    </div>
+    <br />
+    <h4>Billing Address</h4>
+    @{
+        Html.RenderPartial("_AddressInput");
+    }
+    <br />
+    <button type="submit" class="btn btn-default col-sm-offset-2">Submit</button>
+</form>

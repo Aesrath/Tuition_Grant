@@ -1,0 +1,139 @@
+﻿@model Pokedex
+@{
+
+	var Type1Array =
+	   new string[] {
+			"Bug", "Dragon", "Electric", "Fairy",
+			"Fighting", "Fire", "Ghost", "Grass",
+			"Ground", "Ice", "Normal", "Poison",
+			"Psychic", "Rock", "Water"
+	   };
+	
+	var Type2Array =
+	   new string[] {
+			"Fairy", "Fighting", "Fly", "Grass",
+			"Ground", "Ice", "Poison", "Psychic",
+			"Rock", "Steel", "Water"
+	   };
+
+	string msg = ViewData["msg"] as string;
+}
+
+<div class="row">
+	<div class="col-sm-offset-1 col-sm-4">
+		<h2>Add New Pokedex</h2>
+	</div>
+</div>
+
+<form asp-controller="Pokedex"
+	  asp-action="Add"
+	  method="post"
+	  enctype="multipart/form-data"
+	  class="form-horizontal">
+
+	@if (msg != null)
+	{
+		<div class="form-group">
+			<div class="col-sm-offset-1 col-sm-4">
+				<div class="alert alert-danger">
+					<strong>@msg</strong>
+				</div>
+			</div>
+		</div>
+	}
+
+	@{
+		//TODO: P03 Task 4 - Complete the Add New Pokedex Form
+	}
+
+	<div class="form-group">
+		<!--  ID  -->
+		<label class="control-label col-sm-2" asp-for="Id">ID: </label>
+		<div class="col-sm-4">
+			<input asp-for="Id" class="form-control" />
+		</div>
+
+	</div>
+
+	<div class="form-group">
+		<!--  Name  -->
+		<label class="control-label col-sm-2" asp-for="Name">Name: </label>
+		<div class="col-sm-4">
+			<input asp-for="Name" class="form-control" />
+		</div>
+
+	</div>
+
+	<div class="form-group">
+		<!--  Type1  -->
+		<label class="control-label col-sm-2" asp-for="Type1">Type1: </label>
+		<div class="col-sm-4">
+			<select class="form-control" asp-for="Type1">
+				@foreach(var type in Type1Array)
+				{
+					<option value="@type">@type</option>
+
+				}
+			</select>
+		</div>
+
+	</div>
+
+	<div class="form-group">
+		<!--  Type2  -->
+		<label class="control-label col-sm-2" asp-for="Type2">Type2: </label>
+		<div class="col-sm-4">
+			<select class="form-control" asp-for="Type2">
+				@foreach (var type in Type2Array)
+				{
+					<option value ="@type">@type</option>
+
+				}
+				<option value="">Null</option>
+			</select>
+		</div>
+
+	</div>
+
+	<div class="form-group">
+		<!--  Attack  -->
+		<label class="control-label col-sm-2" asp-for="Attack">Attack: </label>
+		<div class="col-sm-4">
+			<input asp-for="Attack" class="form-control" />
+		</div>
+
+	</div>
+
+	<div class="form-group">
+		<!--  Defence  -->
+		<label class="control-label col-sm-2" asp-for="Defence">Defence: </label>
+		<div class="col-sm-4">
+			<input asp-for="Defence" class="form-control" />
+		</div>
+
+	</div>
+
+	<div class="form-group">
+		<!--  Stamina  -->
+		<label class="control-label col-sm-2" asp-for="Stamina">Stamina: </label>
+		<div class="col-sm-4">
+			<input asp-for="Stamina" class="form-control" />
+		</div>
+
+	</div>
+
+	<div class="form-group">
+		<label class="control-label col-sm-1">Picture : </label>
+		<div class="col-sm-4">
+			<input type="file" name="picture" class="form-control" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-sm-offset-1 col-sm-4">
+			<input type="submit" value="Add"
+				   class="btn btn-primary" />
+		</div>
+	</div>
+
+</form>

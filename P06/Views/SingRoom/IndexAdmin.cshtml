@@ -1,0 +1,24 @@
+﻿@model List<SRBooking>
+
+@{
+   ViewBag.Title = "Index";
+   Layout = "~/Views/Shared/_SingRoomLayout.cshtml";
+}
+
+<h2>Admin's List</h2>
+<span style="color:red">@TempData["Msg"]</span>
+<table class="table table-bordered table-condensed table-hover table-striped">
+   <tr>
+      <th class="col-sm-1">Admin ID</th>
+      <th class="col-sm-2">Name</th>
+   </tr>
+   @foreach (SRBooking b in Model)
+   {
+      <tr>
+         <td>@b.Id</td>
+         <td>@b.Name</td>
+       
+      </tr>
+   }
+</table>
+

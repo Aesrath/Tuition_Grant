@@ -1,0 +1,43 @@
+﻿@using P04.Models
+@model List<Booking>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<dynamic> lstPetTypes = ViewData["PetTypes"] as List<dynamic>;
+}
+
+@foreach (var p in lstPetTypes)
+{
+    <!--
+        TODO Task 5d: Use LINQ method chaining approach to complete the query:
+            select all Booking for current PetTypeId and sorted by CheckInDate descending and by PetName ascending order
+    -->
+    List<Booking> data = Model;
+    if (data.Count > 0)
+    {
+        <img src="@{ Write($"/images/pettype{p.Id}.png"); }" />
+        <table class="table table-bordered table-condensed table-hover table-striped">
+            <tr>
+                <th class="col-sm-2">Check-In Date</th>
+                <th class="col-sm-1">Booking ID</th>
+                <th class="col-sm-1">Pet Name</th>
+                <th class="col-sm-2">Owner Name</th>
+            </tr>
+            @foreach (Booking b in data)
+            {
+                <tr>
+                    <td>@string.Format("{0:dd-MM-yyyy}", b.CheckInDate)</td>
+                    <td>@b.Id</td>
+                    <td>@b.PetName</td>
+                    <td>@b.OwnerName</td>
+                </tr>
+            }
+        </table>
+        }
+    }
+
+
+
+

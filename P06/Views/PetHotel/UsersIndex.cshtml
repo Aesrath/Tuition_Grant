@@ -1,0 +1,34 @@
+﻿@model List<PHUser>
+
+@{
+	ViewBag.Title = "Manage Users";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<h2>Manage Users</h2>
+<a asp-action="CreateUser">Create New User</a>
+<span style="color:red">@TempData["Msg"]</span><br />
+<table class="table table-bordered table-condensed table-hover table-striped">
+	<tr>
+		<th class="col-sm-1">Name</th>
+		<th class="col-sm-2">Email</th>
+		<th class="col-sm-2">Role</th>
+		<th class="col-sm-2">Actions</th>
+	</tr>
+
+	@foreach (PHUser b in Model)
+	{
+		<tr>
+			<td>@b.Name</td>
+			<td>@b.Email</td>
+			<td>@b.Role</td>
+			<td>
+				<a asp-action="UpdateBooking" asp-route-id="@b.Id" asp-route-isDelete="false">Update</a>
+				<a asp-action="UpdateBooking" asp-route-id="@b.Id" asp-route-isDelete="true">Delete</a>
+			</td>
+		</tr>
+	}
+
+</table>
+

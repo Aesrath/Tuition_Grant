@@ -1,0 +1,44 @@
+﻿@using P12.Models
+@model List<Appointment>
+
+@{
+    ViewBag.Title = "SearchResult";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    function loadAppointments() {
+        // To be implemented: Load partial view through GetApptByPatientId action into divAppointments based on the value of TxtSearch
+    }
+
+    $(document).ready(function () {
+        $("#BtnGet").click(function() {
+            loadAppointments();
+        });
+    });
+</script>
+<h2>Search By Patient</h2>
+
+<p>
+    <div class="row">
+        <div class='col-sm-10'>
+            <div class="form-group">
+                <label for="TxtSearch" class="col-sm-2 control-label text-right" style="padding-right:0">Patient ID : </label>
+                <div class='col-sm-4'>
+                    <input type="text" class="form-control" id="TxtSearch" value="@ViewBag.PatientId" />
+                </div>
+                <div class='col-sm-2'>
+                    <input type="button" value="Get Appointments" id="BtnGet" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</p><br /><br />
+
+<div id="divAppointments">
+    @{
+        Html.RenderPartial("_Appointments");
+    }
+</div>

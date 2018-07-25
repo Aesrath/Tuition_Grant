@@ -1,0 +1,16 @@
+﻿@model int
+
+@{
+    Layout = "_ExLayout";
+}
+
+@for (int i = 1; i < Model; i++)
+{
+    if (i % 2 == 1)
+    {
+        <div>@i</div>
+        <br/>
+    }
+
+
+}

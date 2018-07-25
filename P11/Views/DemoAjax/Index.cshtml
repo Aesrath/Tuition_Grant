@@ -1,0 +1,84 @@
+﻿@{
+	Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>Demo Ajax Call</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script>
+		$.ajaxSetup({ cache: false });
+	</script>
+	<script>
+		function loadAll() {
+			var apiUrl = "/api/Sales/";
+			var ddlProductId = $("#ddlProductId");
+
+			// TODO P11 Task 3-1 Use $.getJSON, $.each and append method to perform ajax call and update the ddlProductId
+
+			ddlProductId.html("<option value=''>== SELECT --</option>")
+			$.getJSON(apiUrl, function (result) {
+				$.each(result, function (i, item) {
+					ddlProductId.append("<option value='" + item.productId + "'>" + item.productId + "</option>")
+
+				});
+
+			});
+
+
+		}
+
+		function loadPrice() {
+			var productId = $("#ddlProductId").val();
+			var apiUrl = "/api/Sales/Price/" + productId;
+			var txtPrice = $("#txtPrice");
+
+			// TODO P11 Task 3-2 Complete this function to update txtPrice value dynamically
+			$.getJSON(apiUrl, function (result) {
+				txtPrice.val(result);
+
+			});
+
+		}
+
+		$(document).ready(function () {
+
+			$("#btnGetAll").click(function () {
+				loadAll();
+			});
+
+			$("#ddlProductId").change(function () {
+				loadPrice();
+			});
+
+		});
+	</script>
+</head>
+<body>
+	$.getJSON function : <br />
+	<table>
+		<tr>
+			<td>
+				<input type="button" value="Get All" id="btnGetAll" />
+			</td>
+			<td>
+				<select id="ddlProductId"></select>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Price :
+			</td>
+			<td>
+				<input type="text" id="txtPrice" />
+			</td>
+		</tr>
+	</table>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+﻿@{
+    Layout = "_ExLayout";
+}
+
+<h2>LINQ Revision Demonstration Using Pokedex</h2>
+<ul>
+   <li class="list-group-item">
+      <a asp-action="AllRecordsProperties">All Records with All Properties</a>
+   </li>
+   <li class="list-group-item">
+      <a asp-action="SortingLevels">Sorting: Type1, Type2, Name(desc)</a>
+   </li>
+   <li class="list-group-item">
+      <a asp-action="Projection">Projection: Name, Attack, Defence, Stamina</a>
+   </li>
+   <li class="list-group-item">
+      <a asp-action="ProjectionSorting">Projection with Sorting by Name</a>
+   </li>
+   <li class="list-group-item">
+      <a asp-action="Filter1">Filter and Sort Descending</a>
+   </li>
+   <li class="list-group-item">
+      <a asp-action="Filter2">Filter and Sort Ascending</a>
+   </li>
+   <li class="list-group-item">
+      <a asp-action="FilterProjectionSort">Filter, Projection and Sort</a>
+   </li>
+
+   <li class="list-group-item">
+      <a asp-action="Grouping">Grouping, Projection, Aggregates and Sort</a>
+   </li>
+
+   <li class="list-group-item">
+      <a asp-action="GroupingFilter">Grouping, Projection, Aggregates, Filter and Sort</a>
+   </li>
+
+</ul>
+
+<h2>LINQ Revision Exercises Using Pokedex</h2>
+<ul>
+   <li class="list-group-item">
+      <a asp-action="Ex01">For only Pokemon with BOTH Type1 and Type2, sorted Type1, Type2, Name(Desc)</a>
+   </li>
+   <li class="list-group-item">
+      <a asp-action="Ex02">Pokemon with Stamina in between Attack and Defence OR in between Defence and Attack, sorted by Id</a>
+   </li>
+   <li class="list-group-item">
+      <a asp-action="Ex03">List of Electric Pokemon with Name, 'Electric', TotalStat sorted by TotalStat (desc)</a>
+   </li>
+   <li class="list-group-item">
+      <a asp-action="Ex04">For only Pokemon with Type2, group by Type2, display Type2, Count and Average Stamina</a>
+   </li>
+</ul>

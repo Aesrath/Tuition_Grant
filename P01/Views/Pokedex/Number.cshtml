@@ -1,0 +1,61 @@
+﻿@using P01.Models
+@{
+	// TODO: P01 Task 3 - Get the Pokedex from ViewData
+	Pokedex poke = ViewData["Pokemon"] as Pokedex;
+	}
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+   <title>C286 Problem 1</title>
+   <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+   <script src="~/lib/jquery/dist/jquery.min.js"></script>
+   <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+   <nav class="navbar navbar-default" role="navigation">
+      <div class="navbar-header">
+         <a class="pull-left">
+            <img src="~/images/pokebirds.png" height="50" />
+         </a>
+      </div>
+      <div>
+         <ul class="nav navbar-nav">
+            <li class="active">
+               <a href="~/Home/Index">Home</a>
+            </li>
+            <li class="active">
+               <a href="~/Pokedex/Index">Pokedex</a>
+            </li>
+         </ul>
+      </div>
+   </nav>
+   <div class="container">
+      <div class="row">
+@{
+   // TODO: P01 Task 4 - Display each property in the Pokedex 
+}
+         <h1> @poke.Name</h1>
+         <img src="~/images/@poke.ID-200.png" />
+      </div>
+      <div class="row">
+
+         <dl class="dl-horizontal">
+            <dt>ID : </dt>
+            <dd>@poke.ID</dd>
+            <dt>Type : </dt>
+            <dd>@poke.Type1</dd>
+            <dt>Type2 : </dt>
+            <dd>@poke.Type2</dd>
+            <dt>Attack : </dt>
+            <dd>@poke.Attack</dd>
+            <dt>Defence : </dt>
+            <dd>@poke.Defence</dd>
+            <dt>Stamina : </dt>
+            <dd>@poke.Stamina</dd>
+         </dl>
+      </div>
+   </div>
+</body>
+</html>

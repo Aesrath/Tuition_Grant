@@ -1,0 +1,11 @@
+﻿@model List<Order>
+
+@foreach (Order o in Model)
+{
+    <tr>
+        <td>@o.OrderId</td>
+        <td>@String.Format("{0:dd/MM/yyyy}",o.OrderDate)</td>
+        <td>@o.Qty</td>
+    </tr>
+
+}

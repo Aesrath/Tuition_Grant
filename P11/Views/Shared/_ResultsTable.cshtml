@@ -1,0 +1,23 @@
+﻿@model List<Result>
+
+<table id="tblResults" class="table table-bordered col-sm-6">
+    <tr>
+        <th>
+            Module Id
+        </th>
+        <th>
+            Module Name
+        </th>
+        <th>
+            Attained Grade
+        </th>
+    </tr>
+    @foreach (Result r in Model)
+    {
+        <tr>
+            <td>@r.ModuleId</td>
+            <td>@r.Module.Description</td>
+            <td>@r.Grade</td>
+        </tr>
+    }
+</table>

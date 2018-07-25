@@ -1,0 +1,60 @@
+﻿@using P12.Models
+@model Patient
+
+@{
+    ViewBag.Title = "Update Patient Profile";
+}
+
+<h2>Update Patient Profile</h2>
+
+<div class="row">
+    <div class="col-sm-8">
+        <form asp-controller="Patient" asp-action="Update"
+              method="post" enctype="multipart/form-data"
+              class="form-horizontal" role="form">
+            <div class="form-horizontal">
+                <!-- To be implemented: Complete the input blocks for Id (read-only), Name, Citizenship and Icpassport. Except read-only field all other fields should display proper validation messages -->
+                <div class="form-group">
+                    <label asp-for="Id" class="col-sm-4 control-label"></label>
+                    <div class="col-sm-6">
+                        <input asp-for="Id" class="form-control" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Name" class="col-sm-4 control-label"></label>
+                    <div class="col-sm-6">
+                        <input asp-for="Name" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Icpassport" class="col-sm-4 control-label"></label>
+                    <div class="col-sm-6">
+                        <input asp-for="Icpassport" class="form-control"  />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Citizenship" class="col-sm-4 control-label"></label>
+                    <div class="col-sm-6">
+                        <input asp-for="Citizenship" class="form-control"  />
+                    </div>
+                </div>
+                <!-- To be implemented: Add input element to upload file -->
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Photo:</label>
+                    <div class="col-sm-6">
+                        <input type="file" name="photo" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-10">
+                        <input type="submit" value="Update" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="divPreview" class="col-sm-offset-1 col-sm-3">
+        <img src="~/patient_images/@String.Format("{0}.png",Model.Id)" alt="No picture uploaded" class="table-bordered" style="position:absolute;left:50px;top:0px;width:200px;" />
+    </div>
+</div>

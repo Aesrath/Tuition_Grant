@@ -1,0 +1,27 @@
+﻿@using P12.Models
+@model List<Appointment>
+
+@{
+    ViewBag.Title = "All Appointments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>All Appointments</h2>
+
+<table class="table table-bordered table-condensed table-hover table-striped">
+    <tr>
+        <th>Date</th>
+        <th>Patient Id</th>
+        <th>Doctor Id</th>
+        <th>Action</th>
+    </tr>
+    @foreach (Appointment appt in Model)
+    {
+        <tr>
+            <td>@String.Format("{0:dd/MM/yyyy}",appt.AppDate)</td>
+            <td>@appt.PatientId</td>
+            <td>@appt.DoctorId</td>
+            <td><a asp-controller="Appointment" asp-action="Create" asp-route-id="@appt.PatientId">Create Appointment</a></td>
+        </tr>
+    }
+</table>

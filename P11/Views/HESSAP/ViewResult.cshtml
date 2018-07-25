@@ -1,0 +1,111 @@
+﻿@using System.Security.Claims
+@model AcadPerfViewer
+@{
+    ViewBag.Title = "Academic Performance Viewer";
+    dynamic students = null;
+
+    if (ViewData["students"] != null)
+    {
+        students = ViewData["students"] as List<dynamic>;
+        students.Insert(0, new { value = "0", text = "-- SELECT --" });
+    }
+
+    var semesters = ViewData["semesters"] as List<dynamic>;
+    semesters.Insert(0, new { value = "0", text = "-- SELECT --" });
+}
+
+@section ScriptSection {
+    <script>
+        function loadSemesters() {
+            var studentId = $("#ddlStudent").val();
+            var apiUrl = "/api/HESSAP/Semesters/" + studentId;
+            var ddlSemester = $("#ddlSemester");
+
+            //To be implemented: Use $.getJSON to load semesters into ddlSemester and call loadResult function after that
+        }
+
+        function loadResult() {
+            var semester = $("#ddlSemester").val();
+
+            if (semester > 0) {
+                var studentId = $("#ddlStudent").val();
+                var ajaxUrl = "/HESSAP/GetResult/" + studentId + "?Semester=" + semester;
+
+                //To be implented: Update the results table using partial view
+                //Hint: Note that divResultsPanel can be hidden at this point
+            }
+            else {
+                //To be implemented: Hide divResultPanel
+            }
+        };
+
+         $(document).ready(function () {
+            //To be implemented: Hide divResultsPanel
+
+             $("#ddlStudent").change(function () {
+                loadSemesters();
+            });
+
+
+            $("#ddlSemester").change(function () {
+                loadResult();
+            });
+        });
+    </script>
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="col-sm-7">
+        <form asp-controller="ShirtOrder" asp-action="Create" method="post" class="form-horizontal" role="form">
+            <div class="form-group">
+                <label asp-for="CurrentStudent.Id" class="col-sm-3 control-label">
+                    Student
+                </label>
+                <div class="col-sm-6">
+                    <select id="ddlStudent" class="form-control col-sm-6"
+                            asp-for="CurrentStudent.Id">
+                        @if (User.IsInRole("Admin"))
+                        {
+                            @foreach (var item in students)
+                            {
+                                <option value="@item.value">@item.text</option>
+                            }
+                        }
+                        else
+                        {
+			    var userid = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                            <option value="@userid">@userid</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Semester" class="col-sm-3 control-label">
+                    Semester
+                </label>
+                <div class="col-sm-6">
+                    <select id="ddlSemester" class="form-control"
+                            asp-for="Semester">
+                        @foreach (var item in semesters)
+                        {
+                            <option value="@item.value">@item.text</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div id="divResultsPanel" class="form-group">
+                <label for="divResults" class="col-sm-3 control-label">
+                    Acad Results
+                </label>
+                <div id="divResults" class="col-sm-9">
+                    @{
+                        Html.RenderPartial("_ResultsTable", Model.AcadResult);
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

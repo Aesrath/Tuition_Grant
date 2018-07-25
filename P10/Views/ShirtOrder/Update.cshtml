@@ -1,0 +1,71 @@
+﻿@model ShirtOrder
+
+@{
+    ViewBag.Title = "Update Shirt Order";
+}
+
+@section ScriptSection {
+    <script>
+        // implement appropriate function here to use ajax to load shirt preview
+
+        // the function below should be modified to support multiple currency: SGD, USD, MYR
+        function CalcSubtotal() {
+            var qty = $("#txtQty").val();
+            var price = $("#txtPrice").val();
+
+            var subtotal = qty * price;
+            $("#txtSubtotal").val(subtotal.toFixed(2));
+        }
+
+        $(document).ready(function () {
+            // implement appropriate jQuery code here to load the shirt preview
+
+
+            $("#txtQty").change(CalcSubtotal);
+            $("#txtPrice").change(CalcSubtotal);
+
+            $("form").submit(function () {
+                confirm("Proceed? Press OK to confirm.");
+            });
+        });
+    </script>
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="col-sm-7">
+        <form asp-controller="ShirtOrder" asp-action="Update" method="post" class="form-horizontal" role="form">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label asp-for="Id" class="col-sm-4 control-label"></label>
+                    <div class="col-sm-6">
+                        <input asp-for="Id" class="form-control" readonly="readonly" />
+                    </div>
+                </div>
+                @{
+                    Html.RenderPartial("_ShirtOrder");
+                }
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Subtotal: </label>
+                    <div class="col-sm-6" style="padding-right:15px">
+                        <input id="txtSubtotal" class="form-control" readonly="readonly" value="@String.Format("{0:0.00}",Model.Qty * Model.Price)" />
+                    </div>
+                    <div class="col-sm-1" style="padding-left:0">
+                        <!-- Load appropraite partial view here -->
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-10">
+                        <input type="submit" value="Update" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="divPreview" class="col-sm-offset-1 col-sm-4">
+        <!-- Load appropraite partial view here -->
+    </div>
+
+</div>

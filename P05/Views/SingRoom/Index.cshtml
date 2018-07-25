@@ -1,0 +1,32 @@
+﻿@model List<SRBooking>
+
+@{
+	ViewBag.Title = "Index";
+	Layout = "~/Views/Shared/_SingRoomLayout.cshtml";
+}
+
+<h2>All Bookings</h2>
+<span style="color:red">@TempData["Msg"]</span>
+<table class="table table-bordered table-condensed table-hover table-striped">
+	<tr>
+		<th class="col-sm-1">Booking ID</th>
+		<th class="col-sm-2">Name</th>
+		<th class="col-sm-2">Booking Date</th>
+		<th class="col-sm-2">Actions</th>
+		<!-- TODO Task 4a: Add a new column named "Actions" for update and delete actions -->
+	</tr>
+	@foreach (SRBooking b in Model)
+	{
+		<tr>
+			<td>@b.Id</td>
+			<td>@b.Name</td>
+			<td>@string.Format("{0:dd-MM-yyyy}", b.BookingDate)</td>
+			<td><a asp-action="UpdateBooking" asp-route-id="@b.Id" asp-route-isDelete="false">Update</a>
+			<a asp-action="UpdateBooking" asp-route-id="@b.Id" asp-route-isDelete="true">Delete</a>
+			</td>
+			<!-- TODO Task 4b: Display hyperlinks to Update and Delete actions. Please note how asp-action and asp-route-* are used to generate the corresponding hyperlink address. -->
+			<!-- TODO Task 4c: Verification: Navigate to SingRoom/Index to verify that the hyperlinks are shown -->
+		</tr>
+	}
+</table>
+

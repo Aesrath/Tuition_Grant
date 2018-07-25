@@ -1,0 +1,32 @@
+﻿@model List<Pokedex>
+@{
+
+}
+
+<table class="table table-bordered table-condensed table-hover table-striped">
+   <thead>
+      <tr>
+         <td>ID</td>
+         <td>Name</td>
+         <td>Type1</td>
+         <td>Type2</td>
+         <td>Attack</td>
+         <td>Defence</td>
+         <td>Stamina</td>
+      </tr>
+   </thead>
+
+   @foreach (Pokedex poke in Model)
+   {
+      <tr>
+         <td>@poke.Id</td>
+         <td><a href="~/Pokedex/Number/@poke.Id">@poke.Name</a></td>
+         <td><a href="~/Pokedex/Type/@poke.Type1">@poke.Type1</a></td>
+         <td><a href="~/Pokedex/Type/@poke.Type2">@poke.Type2</a></td>
+         <td>@poke.Attack</td>
+         <td>@poke.Defence</td>
+         <td>@poke.Stamina</td>
+      </tr>
+   }
+</table>
+

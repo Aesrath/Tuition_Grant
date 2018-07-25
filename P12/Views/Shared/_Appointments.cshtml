@@ -1,0 +1,42 @@
+﻿@using P12.Models
+@model List<Appointment>
+
+@if (Model != null)
+{
+    <table class="table table-bordered table-condensed table-hover table-striped">
+
+        @if (ViewBag.ByPatient == true)
+        {
+            <tr>
+                <th>Date</th>
+                <th>Doctor Id</th>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <th>Patient Id</th>
+                <th>Doctor Id</th>
+            </tr>
+        }
+        @foreach (Appointment appt in Model)
+        {
+            <tr>
+                @if (ViewBag.ByPatient == true)
+                {
+                <tr>
+                    <td>@string.Format("{0:dd-MM-yyyy}",appt.AppDate)</td>
+                    <td>@appt.DoctorId</td>
+                </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td>@appt.PatientId</td>
+                        <td>@appt.DoctorId</td>
+                    </tr>
+                }
+                </tr>
+        }
+    </table>
+}

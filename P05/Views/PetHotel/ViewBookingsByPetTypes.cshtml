@@ -1,0 +1,41 @@
+﻿@model List<PHBooking>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<dynamic> lstPetTypes = ViewData["PetTypes"] as List<dynamic>;
+}
+
+@foreach (var p in lstPetTypes)
+{
+    List<PHBooking> data = Model.Where(b => b.PetTypeId == p.Id)
+                              .OrderByDescending(b => b.CheckInDate)
+                              .ThenBy(b => b.PetName)
+                              .ToList<PHBooking>();
+    if (data.Count > 0)
+    {
+        <img src="@String.Format("/images/pettype{0}.png", p.Id)" />
+        <table class="table table-bordered table-condensed table-hover table-striped">
+            <tr>
+                <th class="col-sm-2">Check-In Date</th>
+                <th class="col-sm-1">Booking ID</th>
+                <th class="col-sm-1">Pet Name</th>
+                <th class="col-sm-2">Owner Name</th>
+            </tr>
+            @foreach (PHBooking b in data)
+            {
+                <tr>
+                    <td>@string.Format("{0:dd-MM-yyyy}", b.CheckInDate)</td>
+                    <td>@b.Id</td>
+                    <td>@b.PetName</td>
+                    <td>@b.OwnerName</td>
+                </tr>
+            }
+        </table>
+        }
+    }
+
+
+
+

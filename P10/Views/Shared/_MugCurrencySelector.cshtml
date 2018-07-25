@@ -1,0 +1,52 @@
+﻿@{
+	// TODO P10 Task 4-1 Use WebUtl.CallWebApi method to call http://api.fixer.io/latest method to retrieve the latest currency conversion rate
+	//dynamic data = null; // This code needs to be modified
+	string template = "http://api.fixer.io/latest?base={0}&symbols={1}";
+	string url = String.Format(template,"SGD","USD");
+	dynamic data = WebUtl.CallWebApi(url);
+	double rateUSD = 0.8;
+	if (data != null)
+	{
+		// TODO P10 Task 4-2 Assign the returned USD rate to variable rateUSD
+		//rateUSD = rateUSD; // This code needs to be modified
+		rateUSD = data.rates.USD;
+	}
+}
+
+<!-- inserted by _CurrencySelector partial view -->
+<script>
+    var selectedCurrency = "SGD";
+    var rateUSD = @rateUSD;
+
+ 
+    function SetCurrency() {
+        var qty = $("#txtQty").val();
+        var rate = 1;
+        if ($(this).attr("id") == "lnkCurUSD"){
+            selectedCurrency = "USD";
+            rate = rateUSD;
+        }
+        else{
+            selectedCurrency = "SGD";
+            rate = 1;
+        }
+        var newsrc = "/images_flag/" + selectedCurrency + ".png";
+        $("#imgCurrency").attr("src", newsrc);
+        $("#spnCurrency").html(selectedCurrency);
+        CalcSubtotal();
+    }
+
+    $(document).ready(function () {
+        $("#lnkCurSGD").click(SetCurrency);
+        $("#lnkCurUSD").click(SetCurrency);
+    });
+</script>
+
+<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+    <img id="imgCurrency" src="~/images_flag/SGD.png" height="20" width="30" /> <span id="spnCurrency">SGD</span>
+    <span class="caret"></span>
+</button>
+<ul class="dropdown-menu">
+    <li><a id="lnkCurSGD" href="#"><img src="~/images_flag/SGD.png" height="20" width="30" /><span>SGD</span></a></li>
+    <li><a id="lnkCurUSD" href="#"><img src="~/images_flag/USD.png" height="20" width="30" /><span>USD</span></a></li>
+</ul>

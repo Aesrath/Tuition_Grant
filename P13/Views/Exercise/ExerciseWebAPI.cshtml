@@ -1,0 +1,46 @@
+﻿@using P13.Models
+@{
+    Layout = "_DemoLayout";
+}
+
+@section ScriptSection{
+    <script>
+        function ajaxGetOrderSummary() {
+            // TODO P13 Exercise 2c: Call the web api /api/Exercise/ByProductId and refresh the content of #ddlOrderSummary element
+			var apiUrl = "/api/Exercise/ByProductId";
+			var ddlSummary = $("#ddlOrderSummary");
+			ddlSummary.html("<option val=''>-- SELECT --</option>");
+			$.getJSON(apiUrl,
+				function (result) {
+					$.each(result, function (i, field) {
+						ddlSummary.append(
+							"<option val='" + field.productId + "'>" +
+							"[" + field.numberOfOrders + "] " +
+							field.productId + "</option>");
+					});
+				});
+
+        }
+
+        function clearDdl() {
+            $("#ddlOrderSummary").html('');
+        }
+
+        $(document).ready(function () {
+            $("#btnClear").click(clearDdl);
+            $("#btnGet").click(ajaxGetOrderSummary);
+        })
+    </script>
+}
+<h2>Web API Exercise</h2>
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Order Summary</label>
+        <div class="col-sm-2">
+            <select id="ddlOrderSummary"></select>
+        </div>
+        <button class="btn btn-primary col-sm-1" style="margin-left:5px" id="btnClear">Clear</button>
+        <button class="btn btn-primary col-sm-2" style="margin-left:10px" id="btnGet">Get</button>
+    </div>
+    <br />
+</div>
