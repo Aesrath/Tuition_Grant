@@ -43,8 +43,41 @@ namespace P06.Controllers
         }
 
         [Authorize(Roles = "User,Admin")]
+        public IActionResult UpdateBooking()
+        {
+            ViewData["PackageTypes"] = DBUtl.GetList("SELECT Id as value, Description as text FROM SRPackageType ORDER BY Description");
+            ViewData["Slots"] = DBUtl.GetList("SELECT Id as value, Description as text FROM SRSlot ORDER BY Description");
+            ViewData["PostTo"] = "UpdateBooking";
+            ViewData["ButtonText"] = "Update";
+            return View("Edit");
+        }
+
+
+        [Authorize(Roles = "User,Admin")]
         [HttpPost]
         public IActionResult CreateBooking(SRBooking newSRBooking)
+        {
+            string userid = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            if (ModelState.IsValid)
+            {
+                if (DBUtl.ExecSQL(@"INSERT INTO SRBooking (Name, SlotId, PackageTypeId, BookingDate, Hours, AOSnack, AODrink,BookedBy) 
+                                    VALUES ('{0}', {1}, {2}, '{3}', {4}, '{5}', '{6}',{7})",
+                                    newSRBooking.Name, newSRBooking.SlotId, newSRBooking.PackageTypeId, $"{newSRBooking.BookingDate:dd MMMM yyyy}", newSRBooking.Hours, newSRBooking.AOSnack, newSRBooking.AODrink, userid) == 1)
+                    TempData["Msg"] = "New booking added.";
+                else
+                    TempData["Msg"] = DBUtl.DB_Message;
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                TempData["Msg"] = "Invalid information entered!";
+                return RedirectToAction("Index");
+            }
+        }
+
+        [Authorize(Roles = "User,Admin")]
+        [HttpPost]
+        public IActionResult UpdateBooking(SRBooking newSRBooking)
         {
             string userid = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             if (ModelState.IsValid)
@@ -95,29 +128,7 @@ namespace P06.Controllers
             }
         }
 
-        [Authorize(Roles = "User,Admin")]
-        [HttpPost]
-        public IActionResult UpdateBooking(SRBooking uBook)
-        {
-            if (ModelState.IsValid)
-            {
-                string userid = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                if (DBUtl.ExecSQL(@"UPDATE SRBooking 
-                                    SET Name='{0}', SlotId={1}, PackageTypeId={2}, BookingDate='{3}', 
-                                      Hours={4}, AOSnack='{5}', AODrink = '{6}'
-                                    WHERE Id = {7} AND BookedBy={8}",
-                                    uBook.Name, uBook.SlotId, uBook.PackageTypeId, $"{uBook.BookingDate:dd MMMM yyyy}", uBook.Hours, uBook.AOSnack, uBook.AODrink, uBook.Id, userid) == 1)
-                    TempData["Msg"] = $"Booking {uBook.Id} updated.";
-                else
-                    TempData["Msg"] = DBUtl.DB_Message;
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                TempData["Msg"] = "Invalid information entered!";
-                return RedirectToAction("Index");
-            }
-        }
+     
 
         [HttpPost]
         [Authorize(Roles = "User,Admin")]

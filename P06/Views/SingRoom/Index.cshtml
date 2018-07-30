@@ -9,27 +9,40 @@
 <span style="color:red">@TempData["Msg"]</span>
 <table class="table table-bordered table-condensed table-hover table-striped">
    <tr>
-      <th class="col-sm-1"><a asp-action="sortID" asp-route-id="b.Id">Student ID</a></th>
-      <th class="col-sm-2"><a asp-action="sortName" asp-route-name="b.Name">Name</a></th>
-      <th class="col-sm-2"><a asp-action="sortCost" asp-route-cost="b.Cost">NRIC/FIN</a></th>
-      <th class="col-sm-2">Slot booked</th>
+      <th class="col-sm-1"><a asp-action="sort">Student ID</a></th>
+      <th class="col-sm-2"><a asp-action="sort">Name</a></th>
+      <th class="col-sm-2"><a asp-action="sort">NRIC/FIN</a></th>
+      <th class="col-sm-2"><a asp-action="sort">Slot booked</a></th>
+      <th class="col-sm-2"></th>
    </tr>
    @foreach (SRBooking b in Model)
    {
-       int i = 1600;
-      <tr>
-          <td>
-              @b.Id
-          </td>
-         <td>@b.Name
-            </td>
-         <td>
-             @b.Cost
-          </td>
-         <td>To be implemented</td>
-       
-      </tr>
+   <tr>
+       <td>
+           @b.Id
+       </td>
+       <td>
+           @b.Name
+   </td>
+   <td>
+       @b.Cost
+   </td>
+   <td>
+       To be implemented
+   </td>
+   <td>
+       <a asp-action="UpdateBooking" asp-route-id="@b.Id">Update</a>
+       <a asp-action="UpdateBooking" asp-route-id="@b.Id" asp-route-isDelete="true">Delete</a>
+   </td>
+
+   </tr>
        
    }
 </table>
+<div>
+    <iframe allow="microphone;"
+            width="350"
+            height="430"
+            src="https://console.dialogflow.com/api-client/demo/embedded/640b2a42-6f67-43c4-9efa-674e17a66d01"></iframe>
+</div>
 
