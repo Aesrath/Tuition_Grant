@@ -42,16 +42,6 @@ namespace P06.Controllers
             return View("Booking");
         }
 
-        [Authorize(Roles = "User,Admin")]
-        public IActionResult UpdateBooking()
-        {
-            ViewData["PackageTypes"] = DBUtl.GetList("SELECT Id as value, Description as text FROM SRPackageType ORDER BY Description");
-            ViewData["Slots"] = DBUtl.GetList("SELECT Id as value, Description as text FROM SRSlot ORDER BY Description");
-            ViewData["PostTo"] = "UpdateBooking";
-            ViewData["ButtonText"] = "Update";
-            return View("Edit");
-        }
-
 
         [Authorize(Roles = "User,Admin")]
         [HttpPost]
@@ -76,6 +66,16 @@ namespace P06.Controllers
         }
 
         [Authorize(Roles = "User,Admin")]
+        public IActionResult UpdateBooking()
+        {
+            ViewData["PackageTypes"] = DBUtl.GetList("SELECT Id as value, Description as text FROM SRPackageType ORDER BY Description");
+            ViewData["Slots"] = DBUtl.GetList("SELECT Id as value, Description as text FROM SRSlot ORDER BY Description");
+            ViewData["PostTo"] = "UpdateBooking";
+            ViewData["ButtonText"] = "Update";
+            return View("Edit");
+        }
+
+        [Authorize(Roles = "User,Admin")]
         [HttpPost]
         public IActionResult UpdateBooking(SRBooking newSRBooking)
         {
@@ -97,36 +97,7 @@ namespace P06.Controllers
             }
         }
 
-        [Authorize(Roles = "User,Admin")]
-        public IActionResult UpdateBooking(int Id, bool? isDelete)
-        {
-            ViewData["PackageTypes"] = DBUtl.GetList("SELECT Id as value, Description as text FROM SRPackageType ORDER BY Description");
-            ViewData["Slots"] = DBUtl.GetList("SELECT Id as value, Description as text FROM SRSlot ORDER BY Description");
-
-            string userid = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            List<SRBooking> lstBooking = DBUtl.GetList<SRBooking>("SELECT * FROM SRBooking WHERE Id = {0} AND BookedBy={1}", Id, userid);
-            SRBooking model = null;
-            if (lstBooking.Count > 0)
-            {
-                if (isDelete.HasValue == false || isDelete == false)
-                {
-                    ViewData["PostTo"] = "UpdateBooking";
-                    ViewData["ButtonText"] = "Update";
-                }
-                else
-                {
-                    ViewData["PostTo"] = "DeleteBooking";
-                    ViewData["ButtonText"] = "Delete";
-                }
-                model = lstBooking[0];
-                return View("Booking", model);
-            }
-            else
-            {
-                TempData["Msg"] = $"Booking {Id} not found!";
-                return RedirectToAction("Index");
-            }
-        }
+        
 
      
 
