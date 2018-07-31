@@ -9,12 +9,15 @@
 
 <span style="color:red">@TempData["Msg"]</span>
 @foreach (var p in lstPackages)
-{
-    <h2>@p.Description</h2>
-    var data = Model.Where(b => b.PackageTypeId == p.Id)
-                                .OrderBy(b => b.BookingDate)
-                                .ThenBy(b => b.SlotId)
-                                .ToList<SRBooking>();
+ {
+    if (p.Description == "Party Karaoke")
+    {
+
+    <h2>Appointment</h2>
+        var data = Model.Where(b => b.PackageTypeId == p.Id)
+                                    .OrderBy(b => b.BookingDate)
+                                    .ThenBy(b => b.SlotId)
+                                    .ToList<SRBooking>();
     <table class="table table-bordered table-condensed table-hover table-striped">
         <tr>
             <th class="col-sm-2">Session</th>
@@ -35,6 +38,7 @@
         </tr>
         }
     </table>
+    }
 
 }
 
