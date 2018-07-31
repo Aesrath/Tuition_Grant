@@ -35,6 +35,10 @@
             <td>To be implemented</td>
             <td>To be implemented</td>
             <td>To be implemented</td>
+            <td>
+                <a asp-action="UpdateBooking" asp-route-id="@b.Id">Update</a>
+                <a asp-action="UpdateBooking" asp-route-id="@b.Id" asp-route-isDelete="true">Delete</a>
+            </td>
         </tr>
         }
     </table>
